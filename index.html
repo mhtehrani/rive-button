@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rive Interactive Button</title>
+  <title>Rive Multi-State Interactive</title>
   <script src="https://unpkg.com/@rive-app/web-component@2.9.1"></script>
   <style>
     body {
@@ -15,8 +15,8 @@
       height: 100vh;
     }
     rive-canvas {
-      width: 300px;
-      height: 300px;
+      width: 400px;   /* Adjust size as needed */
+      height: 400px;
       cursor: pointer;
     }
   </style>
@@ -26,7 +26,7 @@
 <rive-canvas
   src="26268-49108-animation-s1.riv"
   artboard="Prj-coinvo-trading"
-  state-machines="Candles 2"
+  state-machines="Candles 2,Book,Candles,chart"
   autoplay
 ></rive-canvas>
 
@@ -34,19 +34,30 @@
   const button = document.querySelector("rive-canvas");
 
   button.addEventListener("ready", () => {
-    console.log("✅ Rive Web Component loaded successfully");
+    console.log("✅ Rive Web Component loaded");
 
-    // Get the hover input
-    const inputs = button.stateMachineInputs("Candles 2");
-    const hoverInput = inputs.find(i => i.name === "ishover" && i.type === "boolean");
+    // Map of state machines and their hover/boolean inputs
+    const stateMachines = {
+      "Candles 2": "ishover",
+      "Book": "Boolean 1",
+      "Candles": "ishover",
+      "chart": "ishover"
+    };
 
-    // Mouse hover events
-    button.addEventListener("mouseenter", () => { if (hoverInput) hoverInput.value = true; });
-    button.addEventListener("mouseleave", () => { if (hoverInput) hoverInput.value = false; });
+    Object.entries(stateMachines).forEach(([smName, inputName]) => {
+      const inputs = button.stateMachineInputs(smName);
+      if (!inputs) return; // Skip if state machine not found
 
-    // Optional: click trigger
-    const clickTrigger = inputs.find(i => i.type === "trigger");
-    button.addEventListener("click", () => { if (clickTrigger) clickTrigger.fire(); });
+      const hoverInput = inputs.find(i => i.name === inputName && i.type === "boolean");
+      const clickTrigger = inputs.find(i => i.type === "trigger");
+
+      // Mouse hover triggers boolean input
+      button.addEventListener("mouseenter", () => { if (hoverInput) hoverInput.value = true; });
+      button.addEventListener("mouseleave", () => { if (hoverInput) hoverInput.value = false; });
+
+      // Optional: click triggers
+      button.addEventListener("click", () => { if (clickTrigger) clickTrigger.fire(); });
+    });
   });
 </script>
 
