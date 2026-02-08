@@ -1,7 +1,26 @@
 <!DOCTYPE html>
-<html>
-  <body style="background:#eee;">
-    <h1>Canvas test</h1>
-    <canvas width="200" height="200" style="border:5px solid red;"></canvas>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rive Test</title>
+  <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
+</head>
+<body style="background:#fafafa;">
+  <h1>Rive test</h1>
+
+  <canvas id="c" width="300" height="300" style="border:3px solid blue;"></canvas>
+
+  <script>
+    new rive.Rive({
+      src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/24900-46503-bubble-button.riv",
+      canvas: document.getElementById("c"),
+      autoplay: true,
+      stateMachines: "State Machine 1",
+      layout: new rive.Layout({
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+      }),
+    });
+  </script>
+</body>
 </html>
