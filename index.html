@@ -9,25 +9,30 @@
 <body style="background:#fafafa;">
   <h1>Rive test</h1>
 
-  <canvas id="c" width="300" height="300" style="border:3px solid blue;"></canvas>
+<canvas id="c" style="border:3px solid blue; width:300px; height:300px;"></canvas>
+<script>
+  const canvas = document.getElementById("c");
+  const dpi = window.devicePixelRatio || 1;
+  canvas.width = 300 * dpi;
+  canvas.height = 300 * dpi;
 
-  <!-- Now call Rive after the runtime is loaded -->
-  <script>
-    const riveInstance = new rive.Rive({
-      src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/26268-49108-animation-s1.riv",
-      canvas: document.getElementById("c"),
-      autoplay: true,
-      stateMachines: "Candles 2",
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-      onLoad: () => console.log("✅ Rive loaded successfully"),
-      onError: err => console.error("❌ Rive load error:", err)
-    });
-  </script>
+  const riveInstance = new rive.Rive({
+    src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/26268-49108-animation-s1.riv",
+    canvas: canvas,
+    autoplay: true,
+    stateMachines: "Candles 2",
+    layout: new rive.Layout({
+      fit: rive.Fit.Contain,
+      alignment: rive.Alignment.Center,
+    }),
+    onLoad: () => console.log("✅ Rive loaded successfully"),
+    onError: err => console.error("❌ Rive load error:", err)
+  });
+</script>
+
 </body>
 </html>
+
 
 
 
