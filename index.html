@@ -2,19 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Rive Test</title>
-  <!-- Load Rive runtime FIRST -->
+  <title>Rive Interactive Button</title>
   <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    canvas {
+      cursor: pointer;
+      display: block;
+      width: 300px;   /* Display size */
+      height: 300px;  /* Display size */
+      border: 3px solid blue; /* optional */
+    }
+  </style>
 </head>
-<body style="background:#fafafa;">
-  <h1>Rive test</h1>
+<body>
 
-<canvas id="c" style="width:800px; height:800px;"></canvas>
+<canvas id="riveButton"></canvas>
+
 <script>
-  const canvas = document.getElementById("c");
+  const canvas = document.getElementById("riveButton");
   const dpi = window.devicePixelRatio || 1;
-  canvas.width = 800 * dpi;
-  canvas.height = 800 * dpi;
+  canvas.width = 300 * dpi;
+  canvas.height = 300 * dpi;
 
   const riveInstance = new rive.Rive({
     src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/26268-49108-animation-s1.riv",
@@ -25,16 +42,28 @@
       fit: rive.Fit.Contain,
       alignment: rive.Alignment.Center,
     }),
-    onLoad: () => console.log("✅ Rive loaded successfully"),
+    onLoad: () => {
+      console.log("✅ Rive loaded successfully");
+
+      // Get state machine inputs
+      const inputs = riveInstance.stateMachineInputs("Candles 2");
+
+      // Hover boolean
+      const hoverInput = inputs.find(i => i.name === "ishover" && i.type === "boolean");
+
+      // Click trigger (if any)
+      const clickTrigger = inputs.find(i => i.type === "trigger");
+
+      // Mouse hover
+      canvas.addEventListener("mouseenter", () => { if(hoverInput) hoverInput.value = true; });
+      canvas.addEventListener("mouseleave", () => { if(hoverInput) hoverInput.value = false; });
+
+      // Mouse click
+      canvas.addEventListener("click", () => { if(clickTrigger) clickTrigger.fire(); });
+    },
     onError: err => console.error("❌ Rive load error:", err)
   });
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
