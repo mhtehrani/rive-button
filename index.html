@@ -39,12 +39,9 @@
       fit: rive.Fit.Contain,
       alignment: rive.Alignment.Center,
     }),
+    // REMOVE onLoad code that checks stateMachines
     onLoad: () => {
       console.log("✅ Rive loaded successfully");
-
-      // List all state machines
-      const sms = riveInstance.contents.stateMachines.map(sm => sm.name);
-      console.log("State machines:", sms);
     },
     onError: err => console.error("❌ Rive load error:", err)
   });
@@ -52,3 +49,4 @@
 
 </body>
 </html>
+
