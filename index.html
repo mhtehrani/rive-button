@@ -10,55 +10,48 @@
       padding: 0;
       background: transparent;
       display: flex;
+      gap: 20px; /* space between canvases */
       justify-content: center;
       align-items: center;
       height: 100vh;
     }
     rive-canvas {
-      width: 400px;   /* Adjust size as needed */
-      height: 400px;
+      width: 200px;
+      height: 200px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<rive-canvas
-  src="26268-49108-animation-s1.riv"
-  artboard="Prj-coinvo-trading"
-  state-machines="Candles 2,Book,Candles,chart"
-  autoplay
-></rive-canvas>
+<rive-canvas id="candle2" src="26268-49108-animation-s1.riv" artboard="Prj-coinvo-trading" state-machines="Candles 2" autoplay></rive-canvas>
+<rive-canvas id="book" src="26268-49108-animation-s1.riv" artboard="Prj-coinvo-trading" state-machines="Book" autoplay></rive-canvas>
+<rive-canvas id="candle" src="26268-49108-animation-s1.riv" artboard="Prj-coinvo-trading" state-machines="Candles" autoplay></rive-canvas>
+<rive-canvas id="chart" src="26268-49108-animation-s1.riv" artboard="Prj-coinvo-trading" state-machines="chart" autoplay></rive-canvas>
 
 <script>
-  const button = document.querySelector("rive-canvas");
+function setupRiveCanvas(id, smName, inputName) {
+  const elem = document.getElementById(id);
+  elem.addEventListener("ready", () => {
+    console.log(`✅ ${smName} loaded`);
 
-  button.addEventListener("ready", () => {
-    console.log("✅ Rive Web Component loaded");
+    const inputs = elem.stateMachineInputs(smName);
+    if (!inputs) return;
 
-    // Map of state machines and their hover/boolean inputs
-    const stateMachines = {
-      "Candles 2": "ishover",
-      "Book": "Boolean 1",
-      "Candles": "ishover",
-      "chart": "ishover"
-    };
+    const hoverInput = inputs.find(i => i.name === inputName && i.type === "boolean");
+    const clickTrigger = inputs.find(i => i.type === "trigger");
 
-    Object.entries(stateMachines).forEach(([smName, inputName]) => {
-      const inputs = button.stateMachineInputs(smName);
-      if (!inputs) return; // Skip if state machine not found
-
-      const hoverInput = inputs.find(i => i.name === inputName && i.type === "boolean");
-      const clickTrigger = inputs.find(i => i.type === "trigger");
-
-      // Mouse hover triggers boolean input
-      button.addEventListener("mouseenter", () => { if (hoverInput) hoverInput.value = true; });
-      button.addEventListener("mouseleave", () => { if (hoverInput) hoverInput.value = false; });
-
-      // Optional: click triggers
-      button.addEventListener("click", () => { if (clickTrigger) clickTrigger.fire(); });
-    });
+    elem.addEventListener("mouseenter", () => { if (hoverInput) hoverInput.value = true; });
+    elem.addEventListener("mouseleave", () => { if (hoverInput) hoverInput.value = false; });
+    elem.addEventListener("click", () => { if (clickTrigger) clickTrigger.fire(); });
   });
+}
+
+// Setup all four state machines
+setupRiveCanvas("candle2", "Candles 2", "ishover");
+setupRiveCanvas("book", "Book", "Boolean 1");
+setupRiveCanvas("candle", "Candles", "ishover");
+setupRiveCanvas("chart", "chart", "ishover");
 </script>
 
 </body>
