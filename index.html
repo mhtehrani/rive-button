@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rive Button</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Rive Canvas Runtime -->
+  <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="riveButton" width="280" height="280"></canvas>
+
+  <script>
+    const riveButton = new rive.Rive({
+      src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/24900-46503-bubble-button.riv",
+      canvas: document.getElementById("riveButton"),
+      autoplay: true,
+      stateMachines: "State Machine 1",
+      layout: new rive.Layout({
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+      }),
+    });
+
+    // Optional navigation on click
+    document.getElementById("riveButton").addEventListener("click", () => {
+      // window.location.href = "https://example.com";
+      console.log("Rive button clicked");
+    });
+  </script>
+
+</body>
+</html>
