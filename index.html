@@ -1,26 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Rive Test</title>
-  <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
-</head>
-<body style="background:#fafafa;">
-  <h1>Rive test</h1>
+<script>
+  const riveInstance = new rive.Rive({
+    src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/24900-46503-bubble-button.riv",
+    canvas: document.getElementById("c"),
+    autoplay: true,
+    onLoad: () => {
+      console.log("Rive loaded:", riveInstance);
 
-  <canvas id="c" width="300" height="300" style="border:3px solid blue;"></canvas>
-
-  <script>
-    new rive.Rive({
-      src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/24900-46503-bubble-button.riv",
-      canvas: document.getElementById("c"),
-      autoplay: true,
-      stateMachines: "State Machine 1",
-      layout: new rive.Layout({
-        fit: rive.Fit.Contain,
-        alignment: rive.Alignment.Center,
-      }),
-    });
-  </script>
-</body>
-</html>
+      console.log("Artboards:", riveInstance.contents.artboards.map(a => a.name));
+      console.log("StateMachines:", riveInstance.contents.stateMachines.map(s => s.name));
+      console.log("Animations:", riveInstance.contents.animations.map(a => a.name));
+    },
+    onError: err => console.error("Rive load error:", err)
+  });
+</script>
