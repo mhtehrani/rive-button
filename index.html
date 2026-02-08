@@ -17,9 +17,9 @@
     canvas {
       cursor: pointer;
       display: block;
-      width: 300px;   /* CSS display size */
-      height: 300px;  /* CSS display size */
-      border: 3px solid blue; /* optional, remove if not needed */
+      width: 300px;
+      height: 300px;
+      border: 3px solid blue; /* optional */
     }
   </style>
 </head>
@@ -28,37 +28,28 @@
 <canvas id="riveButton"></canvas>
 
 <script>
-  const canvas = document.getElementById("riveButton"); // MUST define first
+  window.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("riveButton");
 
-  const riveInstance = new rive.Rive({
-    src: "26268-49108-animation-s1.riv",
-    canvas: canvas,
-    autoplay: true,
-    layout: new rive.Layout({
-      fit: rive.Fit.Contain,
-      alignment: rive.Alignment.Center,
-    }),
-    onLoad: () => {
-      console.log("✅ Rive loaded successfully");
+    const riveInstance = new rive.Rive({
+      src: "26268-49108-animation-s1.riv",
+      canvas: canvas,
+      autoplay: true,
+      layout: new rive.Layout({
+        fit: rive.Fit.Contain,
+        alignment: rive.Alignment.Center,
+      }),
+      onLoad: () => {
+        console.log("✅ Rive loaded successfully");
 
-      // List all state machines in the file
-      const sms = riveInstance.contents.stateMachines.map(sm => sm.name);
-      console.log("State machines:", sms);
-    },
-    onError: err => console.error("❌ Rive load error:", err)
+        // List all state machines in the file
+        const sms = riveInstance.contents.stateMachines.map(sm => sm.name);
+        console.log("State machines:", sms);
+      },
+      onError: err => console.error("❌ Rive load error:", err)
+    });
   });
 </script>
 
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
