@@ -17,9 +17,9 @@
     canvas {
       cursor: pointer;
       display: block;
-      width: 300px;   /* Display size */
-      height: 300px;  /* Display size */
-      border: 3px solid blue; /* optional */
+      width: 300px;   /* CSS display size */
+      height: 300px;  /* CSS display size */
+      border: 3px solid blue; /* optional, remove if not needed */
     }
   </style>
 </head>
@@ -34,7 +34,7 @@
   canvas.height = 300 * dpi;
 
   const riveInstance = new rive.Rive({
-    src: "https://raw.githubusercontent.com/mhtehrani/my-assets/main/26268-49108-animation-s1.riv",
+    src: "26268-49108-animation-s1.riv", // local file in same folder
     canvas: canvas,
     autoplay: true,
     stateMachines: "Candles 2",
@@ -45,21 +45,16 @@
     onLoad: () => {
       console.log("✅ Rive loaded successfully");
 
-      // Get state machine inputs
       const inputs = riveInstance.stateMachineInputs("Candles 2");
 
-      // Hover boolean
+      // Hover boolean input
       const hoverInput = inputs.find(i => i.name === "ishover" && i.type === "boolean");
+      canvas.addEventListener("mouseenter", () => { if (hoverInput) hoverInput.value = true; });
+      canvas.addEventListener("mouseleave", () => { if (hoverInput) hoverInput.value = false; });
 
       // Click trigger (if any)
       const clickTrigger = inputs.find(i => i.type === "trigger");
-
-      // Mouse hover
-      canvas.addEventListener("mouseenter", () => { if(hoverInput) hoverInput.value = true; });
-      canvas.addEventListener("mouseleave", () => { if(hoverInput) hoverInput.value = false; });
-
-      // Mouse click
-      canvas.addEventListener("click", () => { if(clickTrigger) clickTrigger.fire(); });
+      canvas.addEventListener("click", () => { if (clickTrigger) clickTrigger.fire(); });
     },
     onError: err => console.error("❌ Rive load error:", err)
   });
