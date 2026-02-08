@@ -1,3 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rive Interactive Button</title>
+  <script src="https://unpkg.com/@rive-app/canvas@2.9.1"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    canvas {
+      cursor: pointer;
+      display: block;
+      width: 300px;   /* CSS display size */
+      height: 300px;  /* CSS display size */
+      border: 3px solid blue; /* optional, remove if not needed */
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="riveButton"></canvas>
+
 <script>
 const riveInstance = new rive.Rive({
   src: "26268-49108-animation-s1.riv",
@@ -16,3 +45,15 @@ const riveInstance = new rive.Rive({
   onError: err => console.error("❌ Rive load error:", err)
 });
 </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
